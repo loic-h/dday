@@ -1,4 +1,4 @@
-# d-day
+# dday
 
 ## Project setup
 ```
