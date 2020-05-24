@@ -1,28 +1,38 @@
 <template>
   <div class="event-form">
-    <d-minus :time="time" />
-    <input-time :value="time" @input="onTimeChange" placeholder="Date" />
-    <span>until</span>
+    <span>How long until</span>
     <input type="text" v-model="name" placeholder="event">
+    <span>on</span>
+    <input-time :value="time" @input="onTimeChange" placeholder="Date" />
+    <a :href="link" v-if="link">{{ link }}</a>
   </div>
 </template>
 
 <script>
-import DMinus from "./d-minus";
 import InputTime from "./input-time";
 import moment from 'moment';
 
 export default {
   name: 'EventForm',
   components: {
-    InputTime,
-    DMinus
+    InputTime
   },
   data() {
     return {
       name: null,
-      time: Date.now()
+      time: null
     };
+  },
+  computed: {
+    link() {
+      if (!this.name || !this.time) {
+        return;
+      }
+      const url = new URL(window.location);
+      url.searchParams.append('n', this.name);
+      url.searchParams.append('t', this.time);
+      return url.href;
+    }
   },
   methods: {
     onTimeChange(value) {

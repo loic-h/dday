@@ -1,7 +1,7 @@
 <template>
   <div class="input-time">
-    <!-- <input type="text" @focus="onFocus" @blur="onBlur" /> -->
-    <div class="modal">
+    <input type="text" :value="formattedTime" :placeholder="placeholder" @focus="onFocus" @blur="onBlur" />
+    <div class="modal" v-if="isFocus">
       <div class="date">
         <input-day :value="day" :year="year" :month="month" @input="onDayInput" />
         <input-month :value="month" @input="onMonthInput" />
@@ -32,21 +32,26 @@ export default {
     InputMinute
   },
   props: {
-    value: Number // Unix
+    value: Number, // Unix
+    placeholder: String
   },
   data() {
     return {
-      // isFocus: false,
+      isFocus: false,
       year: null,
       month: null,
       day: null,
       hour: null,
       minute: null,
+      time: null
     }
   },
   computed: {
     moment() {
-      return moment(this.value);
+      return moment(this.value || Date.now());
+    },
+    formattedTime() {
+      return this.value ? this.moment.format("D MMM YYYY, hh:mm") : '';
     }
   },
   watch: {
@@ -93,13 +98,14 @@ export default {
       this.minute = value;
     },
     emitTime() {
-      this.$emit('input', moment(`${this.year}-${this.month}-${this.day} ${this.hour}:${this.minute}`).valueOf());
+      const time = moment(`${this.year}-${this.month}-${this.day} ${this.hour}:${this.minute}`).valueOf();
+      this.$emit('input', time);
     },
     onFocus() {
       this.isFocus = true;
     },
     onBlur() {
-      this.isFocus = false;
+      // this.isFocus = false;
     }
   }
 }
