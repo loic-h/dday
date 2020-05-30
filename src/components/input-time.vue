@@ -2,14 +2,16 @@
   <div class="input-time">
     <input type="text" :value="formattedTime" :placeholder="placeholder" @focus="onFocus" @blur="onBlur" />
     <div class="modal" v-if="isFocus">
-      <div class="date">
-        <input-day :value="day" :year="year" :month="month" @input="onDayInput" />
-        <input-month :value="month" @input="onMonthInput" />
-        <input-year :value="year" @input="onYearInput" />
-      </div>
-      <div class="time">
-        <input-hour :value="hour" @input="onHourInput" />
-        <input-minute :value="minute" @input="onMinuteInput" />
+      <div class="modal-inner">
+        <div class="date">
+          <input-day class="input" :value="day" :year="year" :month="month" @input="onDayInput" />
+          <input-month class="input" :value="month" @input="onMonthInput" />
+          <input-year class="input" :value="year" @input="onYearInput" />
+        </div>
+        <div class="time">
+          <input-hour class="input" :value="hour" @input="onHourInput" />
+          <input-minute class="input" :value="minute" @input="onMinuteInput" />
+        </div>
       </div>
     </div>
   </div>
@@ -110,3 +112,42 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 20rem;
+}
+
+.modal-inner > div {
+  display: flex;
+  justify-content: center;
+}
+
+.modal-inner > div:not(:last-child) {
+  margin-bottom: 1em;
+}
+
+.input:not(:first-child) {
+  margin-left: 0.5em;
+}
+
+.input:not(:last-child) {
+  margin-right: 0.5em;
+}
+</style>

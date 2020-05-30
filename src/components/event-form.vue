@@ -1,10 +1,20 @@
 <template>
   <div class="event-form">
-    <span>How long until</span>
-    <input type="text" v-model="name" placeholder="event">
-    <span>on</span>
-    <input-time :value="time" @input="onTimeChange" placeholder="Date" />
-    <a :href="link" v-if="link">{{ link }}</a>
+    <div class="line">
+      How long from
+    </div>
+    <div class="line">
+      <input class="line" type="text" v-model="name" placeholder="event">
+    </div>
+    <div class="line">
+      on
+    </div>
+    <div class="line">
+      <input-time :value="time" @input="onTimeChange" placeholder="Date" />
+    </div>
+    <div class="line">
+      <a :href="link" v-if="link">{{ link }}</a>
+    </div>
   </div>
 </template>
 
@@ -42,9 +52,20 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .event-form {
   display: flex;
   flex-direction: column;
+  font-size: 2rem;
+}
+
+.line {
+  margin-bottom: 1em;
+}
+
+input[type=text] {
+  border-bottom: #454545 solid 1px;
+  text-align: inherit;
+  color: #222222;
 }
 </style>

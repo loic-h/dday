@@ -2,7 +2,7 @@
   <div id="app">
     <div v-if="name && time">
       <d-minus :time="time" />
-      <span>before</span>
+      <span>from</span>
       <h2>{{ name }}</h2>
     </div>
     <div v-else>
@@ -14,6 +14,9 @@
 <script>
 import DMinus from "./components/d-minus";
 import EventForm from './components/event-form.vue';
+
+import './css/reset.css';
+import './css/font.css';
 
 export default {
   name: 'App',
@@ -37,11 +40,13 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #454545;
+  font-weight: 300;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-top: 30vh;
+  box-sizing: border-box;
 }
 </style>
