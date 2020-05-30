@@ -1,10 +1,7 @@
 <template>
   <div @wheel="onScrollHandler" ref="list" :class="{ smooth: isSmooth }">
-    <ul ref="inner"
-      :style="{
-        paddingTop: listPadding,
-        paddingBottom: listPadding
-      }">
+    <ul ref="inner">
+      <li v-if="!loop" />
       <li
         v-for="(v, i) in displayedRange"
         :key="i"
@@ -17,6 +14,7 @@
           {{ v }}
         </span>
       </li>
+      <li v-if="loop" />
     </ul>
   </div>
 </template>
@@ -36,19 +34,6 @@ export default {
       scrollTop: null,
       displayedRange: this.range,
       isSmooth: false
-    }
-  },
-  computed: {
-    previous() {
-      const index = this.loop && this.index <= 0 ? this.range.length - 1 : this.index - 1;
-      return this.range[index];
-    },
-    next() {
-      const index = this.loop && this.index >= this.range.length - 1 ? 0 : this.index + 1;
-      return this.range[index];
-    },
-    listPadding() {
-      return this.itemHeight() * 3;
     }
   },
   mounted() {
@@ -79,8 +64,11 @@ export default {
     },
     onScroll() {
       this.updateRange();
-      const index = Math.round(this.$refs.list.scrollTop / this.$refs.items[0].clientHeight);
-      const value = this.displayedRange[index + 1];
+      let index = Math.round(this.$refs.list.scrollTop / this.$refs.items[0].clientHeight);
+      if (this.loop) {
+        index ++;
+      }
+      const value = this.displayedRange[index];
       const scrollTop = this.$refs.list.scrollTop;
       this.$emit('input', value);
     },
@@ -95,6 +83,9 @@ export default {
       })
     },
     updateRange() {
+      if (!this.loop) {
+        return;
+      }
       const scrollTop = this.$refs.list.scrollTop;
       const delta = this.itemHeight() * ( DELTA - 1 );
       if (scrollTop < delta) {
@@ -164,14 +155,29 @@ ul {
 
 li {
   height: 1em;
+  position: relative;
+  padding: 0 0.3em;
+  display: flex;
+  align-items: center;
 }
 
 li:not(.active) {
   opacity: 0.5;
 }
 
+li span {
+  position: relative;
+}
+
 li:not(.active) span {
   font-size: 0.75em;
+}
+
+li.active span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 </style>

@@ -1,8 +1,9 @@
 <template>
   <input-range
     :value="value"
-    @input="onInput"
-    :range="range" />
+    :range="range"
+    :loop="false"
+    @input="onInput" />
 </template>
 
 <script>
