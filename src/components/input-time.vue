@@ -13,6 +13,7 @@
           <input-minute class="input" :value="minute" @input="onMinuteInput" />
         </div>
       </div>
+      <button @click="onValidation">ok</button>
     </div>
   </div>
 </template>
@@ -66,21 +67,6 @@ export default {
         this.minute = this.moment.format('mm');
       },
       immediate: true
-    },
-    year() {
-      this.emitTime();
-    },
-    month() {
-      this.emitTime();
-    },
-    day() {
-      this.emitTime();
-    },
-    hour() {
-      this.emitTime();
-    },
-    minute() {
-      this.emitTime();
     }
   },
   methods: {
@@ -99,15 +85,17 @@ export default {
     onMinuteInput(value) {
       this.minute = value;
     },
-    emitTime() {
-      const time = moment(`${this.year}-${this.month}-${this.day} ${this.hour}:${this.minute}`).valueOf();
-      this.$emit('input', time);
-    },
     onFocus() {
       this.isFocus = true;
     },
     onBlur() {
       // this.isFocus = false;
+    },
+    onValidation() {
+      console.log("onValidation")
+      this.isFocus = false;
+      const time = moment(`${this.year}-${this.month}-${this.day} ${this.hour}:${this.minute}`).valueOf();
+      this.$emit('input', time);
     }
   }
 }
@@ -149,5 +137,10 @@ export default {
 
 .input:not(:last-child) {
   margin-right: 0.5em;
+}
+
+button {
+  margin-top: 2em;
+  font-size: 1.5rem;
 }
 </style>
