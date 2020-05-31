@@ -52,6 +52,6 @@ export default {
   padding-top: 30vh;
   box-sizing: border-box;
   font-size: 2rem;
-  padding: 0.5rem;
+  padding: 1rem;
 }
 </style>
