@@ -9,6 +9,7 @@
           item: true,
           active: value === v
         }"
+        @click="onClick"
         ref="items">
         <span>
           {{ v }}
@@ -38,25 +39,17 @@ export default {
   },
   mounted() {
     const index = this.range.findIndex(x => x === this.value);
-    this.$refs.list.scrollTop = this.$refs.items[index - 1].offsetTop;
+    this.goTo(this.$refs.items[index], null);
     this.$nextTick(() => {
       this.updateRange();
-    })
+    });
 
     this.isScrollEnded = checkIsScrollEnded(this.onScrollEnd);
   },
   methods: {
-    onPreviousClick() {
-      if (typeof this.previous === 'undefined') {
-        return;
-      }
-      this.$emit('input', this.previous);
-    },
-    onNextClick() {
-      if (typeof this.next === 'undefined') {
-        return;
-      }
-      this.$emit('input', this.next)
+    onClick(e) {
+      const li = e.target.closest('li');
+      this.goTo(li, true);
     },
     onScrollHandler(e) {
       this.isScrollEnded();
@@ -64,7 +57,7 @@ export default {
     },
     onScroll() {
       this.updateRange();
-      let index = Math.round(this.$refs.list.scrollTop / this.$refs.items[0].clientHeight);
+      let index = Math.round(this.$refs.list.scrollTop / this.itemHeight());
       if (this.loop) {
         index ++;
       }
@@ -73,14 +66,18 @@ export default {
       this.$emit('input', value);
     },
     onScrollEnd() {
-      const scrollTop = Math.round(this.$refs.list.scrollTop / this.itemHeight()) * this.itemHeight()
-      this.isSmooth = true;
-      this.$nextTick(() => {
-        this.$refs.list.scrollTop = scrollTop;
-        this.$nextTick(() => {
-          this.isSmooth = false;
-        })
-      })
+      let index = Math.round(this.$refs.list.scrollTop / this.itemHeight());
+      if (this.loop) {
+        index ++;
+      }
+      const item = this.$refs.items[index];
+      this.goTo(item, false);
+    },
+    goTo(el, smooth) {
+      this.$refs.list.scrollTo({
+        top: el.previousSibling.offsetTop,
+        behavior: smooth ? 'smooth' : 'auto'
+      });
     },
     updateRange() {
       if (!this.loop) {
