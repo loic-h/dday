@@ -1,9 +1,11 @@
 <template>
   <div id="app">
-    <div v-if="name && time">
+    <div v-if="time">
       <d-minus :time="time" />
-      <span>from</span>
-      <h2>{{ name }}</h2>
+      <template v-if="name">
+        <span>from</span>
+        <h2>{{ name }}</h2>
+      </template>
     </div>
     <div v-else>
       <event-form />
@@ -48,5 +50,6 @@ export default {
   flex-direction: column;
   padding-top: 30vh;
   box-sizing: border-box;
+  font-size: 2rem;
 }
 </style>

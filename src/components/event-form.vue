@@ -35,11 +35,13 @@ export default {
   },
   computed: {
     link() {
-      if (!this.name || !this.time) {
+      if (!this.time) {
         return;
       }
       const url = new URL(window.location);
-      url.searchParams.append('n', this.name);
+      if (this.name) {
+        url.searchParams.append('n', this.name);
+      }
       url.searchParams.append('t', this.time);
       return url.href;
     }

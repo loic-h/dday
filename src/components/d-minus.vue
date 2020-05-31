@@ -1,7 +1,5 @@
 <template>
-  <div class="d-minus">
-    {{ formattedTime }}
-  </div>
+  <div v-html="formattedTime" />
 </template>
 
 <script>
@@ -35,8 +33,14 @@ export default {
         letter = "o";
         value = 0;
       }
-      return `${letter}${sign}${value}`
+      return `${letter}&nbsp;${sign}&nbsp;${value}`
     }
   }
 }
 </script>
+
+<style scoped>
+div {
+  text-transform: uppercase;
+}
+</style>
