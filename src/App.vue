@@ -1,24 +1,21 @@
 <template>
   <div id="app">
-    <div v-if="time">
+    <template v-if="time">
       <d-minus :time="time" />
       <template v-if="name">
         <span>from</span>
         <h2>{{ name }}</h2>
       </template>
-    </div>
-    <div v-else>
+    </template>
+    <template v-else>
       <event-form />
-    </div>
+    </template>
   </div>
 </template>
 
 <script>
 import DMinus from "./components/d-minus";
 import EventForm from './components/event-form.vue';
-
-import './css/reset.css';
-import './css/font.css';
 
 export default {
   name: 'App',
@@ -41,6 +38,9 @@ export default {
 </script>
 
 <style>
+@import './css/reset.css';
+@import './css/font.css';
+
 #app {
   text-align: center;
   color: #454545;
@@ -48,8 +48,10 @@ export default {
   min-height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   padding-top: 30vh;
   box-sizing: border-box;
   font-size: 2rem;
+  padding: 0.5rem;
 }
 </style>

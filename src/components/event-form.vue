@@ -13,7 +13,7 @@
       <input-time :value="time" @input="onTimeChange" placeholder="Date" />
     </div>
     <div class="line">
-      <a :href="link" v-if="link">{{ link }}</a>
+      <a class="link" :href="link" v-if="link">{{ link }}</a>
     </div>
   </div>
 </template>
@@ -69,5 +69,11 @@ input[type=text] {
   border-bottom: #454545 solid 1px;
   text-align: inherit;
   color: #222222;
+  max-width: 100%;
+}
+
+a.link {
+  font-size: 1.5rem;
+  color: blue;
 }
 </style>

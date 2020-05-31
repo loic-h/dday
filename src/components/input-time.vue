@@ -1,6 +1,6 @@
 <template>
   <div class="input-time">
-    <input type="text" :value="formattedTime" :placeholder="placeholder" @focus="onFocus" @blur="onBlur" />
+    <input type="text" :value="formattedTime" :placeholder="placeholder" @click.prevent="onClick" readonly />
     <div class="modal" v-if="isFocus">
       <div class="modal-inner">
         <div class="date">
@@ -85,14 +85,10 @@ export default {
     onMinuteInput(value) {
       this.minute = value;
     },
-    onFocus() {
+    onClick(e) {
       this.isFocus = true;
     },
-    onBlur() {
-      // this.isFocus = false;
-    },
     onValidation() {
-      console.log("onValidation")
       this.isFocus = false;
       const time = moment(`${this.year}-${this.month}-${this.day} ${this.hour}:${this.minute}`).valueOf();
       this.$emit('input', time);
