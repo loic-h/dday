@@ -1,5 +1,5 @@
 <template>
-  <div @wheel="onScrollHandler" ref="list" :class="{ smooth: isSmooth }">
+  <div @scroll="onScrollHandler" ref="list" :class="{ smooth: isSmooth }">
     <ul ref="inner">
       <li v-if="!loop" />
       <li
